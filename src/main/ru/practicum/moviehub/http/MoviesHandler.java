@@ -24,13 +24,13 @@ public class MoviesHandler extends BaseHttpHandler {
         String[] pathParts = path.split("/");
 
         if (method.equalsIgnoreCase("GET")) {
-            if (pathParts.length == 2){
+            if (pathParts.length == 2) {
                 if (query != null && query.contains("year=")) {
                     sendMovieByYear(ex, query);
                 } else {
                     sendJson(ex);
                 }
-            } else if (pathParts.length == 3){
+            } else if (pathParts.length == 3) {
                 sendMovieById(ex, pathParts[2]);
             }
         } else if (method.equalsIgnoreCase("POST")) {
