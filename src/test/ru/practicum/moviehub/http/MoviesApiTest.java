@@ -1,9 +1,6 @@
 package ru.practicum.moviehub.http;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.practicum.moviehub.store.MoviesStore;
 
 import java.net.URI;
@@ -17,7 +14,7 @@ import java.time.Year;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MoviesApiTest {
-    private static final String BASE = "http://localhost:8080"; // !!! добавьте базовую часть URL
+    private static final String BASE = "http://localhost:8080";
     private static MoviesServer server;
     private static HttpClient client;
     private static MoviesStore store;
@@ -46,6 +43,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса гет/мув. Должен возвращать массив (тест в задание был)")
     void getMovies_whenEmpty_returnsEmptyArray() throws Exception {
 
         HttpRequest req = HttpRequest.newBuilder()
@@ -73,6 +71,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса гет/мув. Должен возвращать список фильмов")
     void getMovies_whenRecords_returnsValuesArray() throws Exception {
 
         store.newFilm("Любовь и голуби", 1985);
@@ -103,6 +102,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса пост/мув. Должен добавить фильм и вернуть объект этого фильма")
     void postMovies_should_Successfully_AddMovie_ToStore() throws Exception {
         String movieJson = "{\"title\":\"Любовь и голуби\", \"year\":1985}";
         HttpRequest req = HttpRequest.newBuilder()
@@ -132,6 +132,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса пост/мув. Должен вернуть ошибку при отсутствие названия и неверном годе")
     void postMovies_shouldReturnErrorsForInvalidMovieData() throws Exception {
         String movieJson = "{\"title\":\"\", \"year\":1887}";
         HttpRequest req = HttpRequest.newBuilder()
@@ -161,6 +162,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса пост/мув. Должен вернуть ошибку при слишком длинном названии и неверном годе")
     void postMovies_shouldReturnErrorsForInvalidMovieData2() throws Exception {
         String movieJson = "{\"title\":\"Спецификация даёт нам общее представление о том, как должен работать сервис: " +
                 "какие есть эндпоинты, какие коды ответа возвращать, какие ошибки обрабатывать. Но для работы по TDD " +
@@ -195,6 +197,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса гет/мув/айди. Должен вернуть фильм по айди")
     void getMoviesId_shouldReturnMovieByCorrectId() throws Exception {
 
         store.newFilm("Любовь и голуби", 1985);
@@ -226,6 +229,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса гет/мув/айди. Проверка что не возвращает другие фильмы")
     void getMoviesId_shouldReturnMovieNoCorrectId() throws Exception {
 
         store.newFilm("Любовь и голуби", 1985);
@@ -257,6 +261,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса гет/мув/айди. Если фильма с данным айди нет возвращает ошибку")
     void getMoviesId_shouldReturnMovieNoCorrectId2() throws Exception {
 
         store.newFilm("Любовь и голуби", 1985);
@@ -287,6 +292,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса гет/мув/айди. Возвращает ошибку при неверном айди")
     void getMoviesId_shouldReturnMovieNoCorrectId3() throws Exception {
 
         store.newFilm("Любовь и голуби", 1985);
@@ -316,6 +322,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса делет/мув/айди. Проверка ответа, что фильм удален и его нет в списке")
     void deleteMoviesId_DeleteMovieByID() throws Exception {
 
         store.newFilm("Любовь и голуби", 1985);
@@ -362,6 +369,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса делет/мув/айди. Ошибка если такого айди нет")
     void deleteMoviesId_DeleteMovieByNoCorrectID() throws Exception {
 
         store.newFilm("Любовь и голуби", 1985);
@@ -392,6 +400,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса делет/мув/айди. Ошибка если айди не число")
     void deleteMoviesId_DeleteMovieByNoCorrectID2() throws Exception {
 
         store.newFilm("Любовь и голуби", 1985);
@@ -422,6 +431,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса гет/мув?год. Должен вернуть список фильмов по году")
     void getMoviesYear_shouldReturnMovieByCorrectYear() throws Exception {
 
         store.newFilm("Любовь и голуби", 1985);
@@ -453,6 +463,7 @@ public class MoviesApiTest {
     }
 
     @Test
+    @DisplayName("Проверка запроса гет/мув?год. Ошибка если неверный год")
     void getMoviesYear_shouldReturnMovieByNowCorrectYear() throws Exception {
 
         store.newFilm("Любовь и голуби", 1985);
